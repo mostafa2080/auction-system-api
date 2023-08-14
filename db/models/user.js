@@ -1,6 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
-const bcrypt = require("bcrypt");
+'use strict';
+const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -19,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           is: {
-            //     at least 3 characters long with only letters and spaces
             args: [/^[a-zA-Z ]{3,}$/],
           },
         },
@@ -39,9 +39,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
         set(value) {
-          this.setDataValue("password", bcrypt.hashSync(value, 10));
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
         },
       },
+      passwordResetToken: {
+        type: DataTypes.STRING,
+        exclude: true,
+      },
+      passwordResetExpires: {
+        type: DataTypes.DATE,
+        exclude: true,
+      },
+
       phone: {
         type: DataTypes.STRING,
         validate: {
@@ -51,14 +60,25 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       image: DataTypes.STRING,
-      balance: DataTypes.INTEGER,
-      pending_balance: DataTypes.INTEGER,
+      balance: { type: DataTypes.INTEGER, defaultValue: 0 },
+      pending_balance: { type: DataTypes.INTEGER, defaultValue: 0 },
       false_bids: DataTypes.INTEGER,
+      banned: DataTypes.DATE,
+      is_active: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return this.banned < new Date();
+        },
+      },
     },
+
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
+      timestamps: true,
+      paranoid: true,
     }
   );
+
   return User;
 };

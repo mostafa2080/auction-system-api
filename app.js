@@ -22,12 +22,18 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
   console.log(` Mode: ${process.env.NODE_ENV}`);
 }
-
+//mounting routes 
 mountRoute(app);
+
+//using of the global error handler 
 app.use(globalError);
+
+//if no route is found 
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can not find this Route ${req.originalUrl}`, 400));
 });
+
+//global error handler
 process.on('unhandledRejection', (err) => {
   console.error(`UnhandledRejection Error ${err}`);
   server.close(() => {

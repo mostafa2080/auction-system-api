@@ -37,13 +37,13 @@ module.exports = (sequelize, DataTypes) => {
           // is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/,
         },
         set(value) {
-          this.setDataValue("password", bcrypt.hashSync(value, 10));
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
         },
       },
     },
     {
       sequelize,
-      modelName: "Admin",
+      modelName: 'Admin',
       // timestamps: true,
     }
   );
