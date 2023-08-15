@@ -1,6 +1,3 @@
-// import get all users controller from controllers\dashboard\userController.js
-// import create user controller from controllers\dashboard\userController.js
-
 const express = require('express');
 const {
   getAll,
@@ -11,15 +8,21 @@ const {
   restoreById,
 } = require('../../controllers/dashboard/userController');
 
-const { createUserValidator } = require('../../utils/validators/userValidator');
+const {
+  createUserValidator,
+  updateUserValidator,
+  deleteUserValidator,
+  getUserByIdValidator,
+  restoreUserValidator,
+} = require('../../utils/validators/userValidator');
 const router = express.Router();
 
 router.route('/').get(getAll).post(createUserValidator, createOne);
 router
   .route('/:id')
-  .get(getById)
-  .put(updateById)
-  .delete(deleteById)
-  .post(restoreById);
+  .get(getUserByIdValidator, getById)
+  .put(updateUserValidator, updateById)
+  .delete(deleteUserValidator, deleteById)
+  .post(restoreUserValidator, restoreById);
 
 module.exports = router;

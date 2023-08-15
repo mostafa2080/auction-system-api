@@ -1,6 +1,6 @@
-"use strict";
-const { Model } = require("sequelize");
-const bcrypt = require("bcrypt");
+'use strict';
+const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class Admin extends Model {
     /**
@@ -40,11 +40,21 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue('password', bcrypt.hashSync(value, 10));
         },
       },
+      passwordResetToken: {
+        type: DataTypes.STRING,
+        exclude: true,
+      },
+      passwordResetExpires: {
+        type: DataTypes.DATE,
+        exclude: true,
+      },
+      image: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: 'Admin',
-      // timestamps: true,
+      timestamps: true,
+      paranoid: true,
     }
   );
   return Admin;

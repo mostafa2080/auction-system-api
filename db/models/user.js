@@ -50,7 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         exclude: true,
       },
-
+      passwordResetVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       phone: {
         type: DataTypes.STRING,
         validate: {
