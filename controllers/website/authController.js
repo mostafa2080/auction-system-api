@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
-const ApiError = require('../utils/apiError');
-const sendMail = require('../utils/sendMail');
-const createToken = require('../utils/createToken');
-const db = require('../db/models');
+const ApiError = require('../../utils/apiError');
+const sendMail = require('../../utils/sendMail');
+const createToken = require('../../utils/createToken');
+const db = require('../../db/models');
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 

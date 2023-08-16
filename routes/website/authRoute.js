@@ -5,7 +5,7 @@ const {
   forgotPassword,
   resetPassword,
   verifyPassResetCode,
-} = require('../../controller/authController');
+} = require('../../controllers/website/authController');
 
 const {
   signUpValidator,
